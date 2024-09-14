@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic 80's Music Quiz</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Baloo 2', sans-serif;
+            background-color: #38B6FF; /* Background color */
+            color: black;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        #yellow-box {
+            width: 200px;
+            height: 200px;
+            background-color: #FED405; /* Yellow color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+            border: 5px solid black; /* Black edging */
+            transition: transform 0.1s ease-in-out;
+        }
+
+        #question-answer {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* Keyframes for the bounce animation */
+        @keyframes bounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Class to trigger the bounce animation */
+        .animate-bounce {
+            animation: bounce 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="yellow-box">CLASSIC 80'S MUSIC</div>
+
+    <div id="question-answer"></div>
+
+    <script>
+        const yellowBox = document.getElementById("yellow-box");
+        const questionAnswerDiv = document.getElementById("question-answer");
+
+        // Array of questions and answers about Classic 80's Music
+        const classic80sMusicQuestions = [
+            { question: "Which song by Michael Jackson became a massive hit in 1983 with its iconic music video?", answer: "Thriller" },
+            { question: "What 1984 song by Madonna was a huge hit and became a pop anthem?", answer: "Like a Virgin" },
+            { question: "Which band released the 1985 album 'Songs from the Big Chair'?", answer: "Tears for Fears" },
+            { question: "What 1981 song by Journey is famous for its chorus 'Don't stop believin''?", answer: "Don't Stop Believin'" },
+            { question: "Which 1983 song by David Bowie is known for its electronic sound and music video?", answer: "Let's Dance" },
+            { question: "What 1987 hit by Whitney Houston became one of her signature songs?", answer: "I Wanna Dance with Somebody" },
+            { question: "Which band released the hit 1984 song 'When Doves Cry'?", answer: "Prince and The Revolution" },
+            { question: "What 1982 song by Kool & the Gang is known for its funky groove?", answer: "Celebration" },
+            { question: "Which 1986 song by Bon Jovi became an anthem for the rock genre?", answer: "Livin' on a Prayer" },
+            { question: "What 1980 song by Blondie features a catchy guitar riff and was a big hit?", answer: "Call Me" },
+            { question: "Which 1989 song by the B-52's is known for its quirky lyrics and upbeat tempo?", answer: "Love Shack" },
+            { question: "What 1986 hit by Robert Palmer features a distinctive music video with models dancing?", answer: "Addicted to Love" },
+            { question: "Which 1983 song by Cyndi Lauper became an anthem for individuality?", answer: "Girls Just Want to Have Fun" },
+            { question: "What 1982 song by Michael Jackson is known for its groundbreaking music video and dance moves?", answer: "Billie Jean" },
+            { question: "Which band released the 1985 hit song 'Take On Me'?", answer: "A-ha" },
+            { question: "What 1981 song by Rick Springfield became a huge hit and is known for its catchy chorus?", answer: "Jessie's Girl" },
+            { question: "Which 1984 song by Bruce Springsteen is known for its patriotic themes and energetic sound?", answer: "Born in the U.S.A." },
+            { question: "What 1983 song by the Eurythmics features Annie Lennox's powerful vocals?", answer: "Sweet Dreams (Are Made of This)" },
+            { question: "Which 1986 song by Europe is known for its memorable guitar riff and power ballad style?", answer: "The Final Countdown" },
+            { question: "What 1988 song by George Michael became one of his biggest solo hits?", answer: "Faith" },
+            { question: "Which 1987 hit by U2 is known for its soaring guitar riffs and introspective lyrics?", answer: "With or Without You" },
+            { question: "What 1985 song by Phil Collins features the memorable line 'I can feel it coming in the air tonight'?", answer: "In the Air Tonight" },
+            { question: "Which 1982 hit by Soft Cell is known for its synth-heavy sound and memorable chorus?", answer: "Tainted Love" },
+            { question: "What 1981 song by The Police became a global hit with its reggae influences?", answer: "Every Little Thing She Does Is Magic" },
+            { question: "Which 1988 song by Bobby McFerrin is known for its upbeat, a cappella style?", answer: "Don't Worry, Be Happy" },
+            { question: "What 1989 song by Madonna is known for its provocative lyrics and danceable beat?", answer: "Like a Prayer" },
+            { question: "Which 1986 hit by Van Halen is known for its famous guitar solo and rock vibe?", answer: "Why Can't This Be Love" },
+            { question: "What 1984 song by Tina Turner became an iconic anthem with its powerful vocals?", answer: "What's Love Got to Do with It" },
+            { question: "Which 1983 song by The Police features the memorable line 'I'll be watching you'?", answer: "Every Breath You Take" },
+            { question: "What 1980 song by Queen became a stadium rock anthem with its sing-along chorus?", answer: "Another One Bites the Dust" },
+            { question: "Which 1987 hit by the Pet Shop Boys is known for its catchy melody and synth-pop style?", answer: "West End Girls" },
+            { question: "What 1981 song by Duran Duran is known for its catchy chorus and stylish music video?", answer: "Hungry Like the Wolf" },
+            { question: "Which 1984 song by Tina Turner became a global hit with its energetic beat?", answer: "What's Love Got to Do with It" },
+            { question: "What 1982 song by Michael Jackson is famous for its music video featuring zombies?", answer: "Thriller" },
+            { question: "Which 1987 song by George Michael features a soulful melody and heartfelt lyrics?", answer: "I Want Your Sex" },
+            { question: "What 1989 song by the Bangles became a hit with its catchy chorus and girl-power theme?", answer: "Eternal Flame" },
+            { question: "Which 1982 hit by Human League is known for its synth-pop sound and memorable chorus?", answer: "Don't You Want Me" },
+            { question: "What 1986 song by Bon Jovi features a rousing chorus and rock anthem style?", answer: "Livin' on a Prayer" },
+            { question: "Which 1983 song by David Bowie became a dance hit with its catchy beat?", answer: "Let's Dance" },
+            { question: "What 1987 hit by Whitney Houston is known for its powerful vocals and danceable beat?", answer: "I Wanna Dance with Somebody" },
+            { question: "Which 1984 song by Prince and The Revolution features a famous guitar riff and was a major hit?", answer: "When Doves Cry" },
+            { question: "What 1986 song by Dire Straits features a famous guitar riff and lyrics about working-class life?", answer: "Money for Nothing" },
+            { question: "Which 1981 song by the Rolling Stones features a funky groove and catchy chorus?", answer: "Start Me Up" },
+            { question: "What 1983 song by Cyndi Lauper became a classic anthem with its fun lyrics?", answer: "Girls Just Want to Have Fun" },
+            { question: "Which 1988 song by Bobby McFerrin is known for its upbeat, a cappella style?", answer: "Don't Worry, Be Happy" },
+            { question: "What 1984 song by Madonna became a global hit with its catchy chorus?", answer: "Like a Virgin" },
+            { question: "Which 1982 song by Michael Jackson features a groundbreaking music video and memorable dance moves?", answer: "Billie Jean" },
+            { question: "What 1985 song by A-ha is known for its iconic music video and catchy melody?", answer: "Take On Me" },
+            { question: "Which 1986 song by Robert Palmer features a distinctive music video with models dancing?", answer: "Addicted to Love" },
+            { question: "What 1987 hit by U2 is known for its introspective lyrics and powerful guitar riffs?", answer: "With or Without You" },
+            { question: "Which 1981 song by Blondie features a catchy chorus and became a huge hit?", answer: "Rapture" },
+            { question: "What 1984 song by Bruce Springsteen features patriotic themes and energetic sound?", answer: "Born in the U.S.A." },
+            { question: "Which 1986 hit by Europe features a memorable guitar riff and power ballad style?", answer: "The Final Countdown" }
+        ];
+
+        let shuffledQuestions = [];
+        let questionIndex = 0;
+
+        // Shuffle the questions array
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        // Initialize questions
+        function initializeQuestions() {
+            shuffledQuestions = shuffleArray([...classic80sMusicQuestions]);
+            questionIndex = 0;
+            displayQuestion();
+        }
+
+        // Function to display the current question
+        function displayQuestion() {
+            if (shuffledQuestions.length === 0) {
+                questionAnswerDiv.innerHTML = "<strong>No more questions!</strong>";
+                return;
+            }
+            const currentQA = shuffledQuestions[questionIndex];
+            questionAnswerDiv.innerHTML = `<strong>Question:</strong> ${currentQA.question}<br><strong>Answer:</strong> ${currentQA.answer}`;
+        }
+
+        // Bounce animation on click
+        yellowBox.addEventListener("click", () => {
+            yellowBox.classList.add("animate-bounce");
+            setTimeout(() => {
+                yellowBox.classList.remove("animate-bounce");
+            }, 300);
+            questionIndex = (questionIndex + 1) % shuffledQuestions.length;
+            displayQuestion();
+        });
+
+        // Initialize the quiz
+        initializeQuestions();
+    </script>
+
+</body>
+</html>
